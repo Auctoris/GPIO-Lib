@@ -37,7 +37,7 @@ int setGPIO_Out(int pin)
 
 	/* Now we define a file handle, for the 'gpio/export' sysfs file & try to open it
 	 * Note that we open for writing, and as a binary file*/
-		if ((sysfs_handle = fopen("/sys/class/gpio/export", "wb")) == NULL)
+		if ((sysfs_handle = fopen("/sys/class/gpio/export", "w")) == NULL)
 	{
 		printf("ERROR: Cannot open GPIO export...\n(Is this program running as root?)\n");
 		return 1;
@@ -62,7 +62,7 @@ int setGPIO_Out(int pin)
 	/* We open the direction file for the pin...*/
 	char str_direction_file[MAXSTR];
 	snprintf(str_direction_file, (MAXSTR*sizeof(char)), "/sys/class/gpio/gpio%d/direction", pin);
-	if ((sysfs_handle = fopen(str_direction_file, "wb")) == NULL)
+	if ((sysfs_handle = fopen(str_direction_file, "w")) == NULL)
 	{
 		printf("ERROR: Cannot open direction file...\n");
 		return 3;
@@ -105,7 +105,7 @@ int GPIO_Write(int pin, int value)
 
 	snprintf (str_value_file, (MAXSTR*sizeof(char)), "/sys/class/gpio/gpio%d/value", pin);
 
-	if ((sysfs_handle = fopen(str_value_file, "wb")) == NULL)
+	if ((sysfs_handle = fopen(str_value_file, "w")) == NULL)
 	{
 		printf("ERROR: Cannot open value file for pin %d...\n(Has the pin been exported?)\n", pin);
 		return 1;
@@ -142,7 +142,7 @@ int unsetGPIO(int pin)
 	snprintf (str_pin, (3*sizeof(char)), "%d", pin);
 	snprintf (str_value_file, (MAXSTR*sizeof(char)), "/sys/class/gpio/gpio%d/value", pin);
 
-	if ((sysfs_handle = fopen(str_value_file, "wb")) == NULL)
+	if ((sysfs_handle = fopen(str_value_file, "w")) == NULL)
 	{
 		printf("ERROR: Cannot open value file for pin %d...\n", pin);
 		return 1;
@@ -157,7 +157,7 @@ int unsetGPIO(int pin)
 	
 	/* Once we've done that - the last step is to open the gpio/unexport file - and write the pin
 	 * number to it - to unexport the pin. */
-	if ((sysfs_handle = fopen("/sys/class/gpio/unexport", "wb")) == NULL)
+	if ((sysfs_handle = fopen("/sys/class/gpio/unexport", "w")) == NULL)
 	{
 		printf("ERROR: Cannot open GPIO unexport...\n");
 		return 1;
