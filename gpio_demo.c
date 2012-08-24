@@ -17,8 +17,10 @@ int main()
 			for (j=0;j<(sizeof(pins) / sizeof(int));j++)
 			{
 					if (c==j)
+					{
 						if (GPIO_Write(pins[j],1))
 							return 1;
+					}
 					else
 						if (GPIO_Write(pins[j],0))
 							return 1;
